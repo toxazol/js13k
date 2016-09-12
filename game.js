@@ -1,1 +1,1490 @@
-!function(t,e){function i(){this.active=!1,this.g=function(t,e){return!this.active&&(this.active=!0,this.h=e,this.i=t,this.x=S(e),this.y=S(t),this.arc=0,!0)},this.j=function(){this.active=!1},this.k=null,this.l=function(t){this.k=null;let e=N.atan2(bots[t].y-this.y,bots[t].x-this.x);if(bots[t].i===this.i&&bots[t].h===this.h)return void(this.k=t);if(d(e,m(this.arc+L),L)){let e=[],i=new a(bots[t].x-this.x,bots[t].y-this.y);for(let n of ut){let t=g(n,i,this);t&&e.push({m:t,o:n})}let o=k(bots[t],this);e.length?(e.sort((t,e)=>k(t.m,this)-k(e.m,this)),k(e[0].m,this)>o&&(this.k=t)):this.k=t}}}function n(t){bt=t/500}function o(t){let e=I(Qt),i=qt.i,n=qt.h;for(yt.push({i:i,h:n});0!=e[i][n].dir;){switch(e[i][n].dir){case 1:n--;break;case 2:i--;break;case 3:n++;break;case 4:i++}yt.push({i:i,h:n})}let o,r={};for(let i=0;i<t;i++)for(;;){r.i=~~(N.random()*kt),r.h=~~(N.random()*mt);let t=new s(r.i,r.h);if(o=q(t),o.p>2){bots.push(t);break}}yt=[]}function s(t,e){this.i=t,this.h=e,this.x=S(this.h),this.y=S(this.i),this.dir=0,this.q=!1,this.s=!1,this.t={i:this.i,h:this.h},this.u=function(){let t,e={};for(;;)if(e.i=~~(N.random()*kt),e.h=~~(N.random()*mt),this.i=e.i,this.h=e.h,t=q(this),t.p>2)break;this.x=S(this.h),this.y=S(this.i),this.dir=0,this.q=!1,this.s=!1}}function r(t){Tt=c(t/8*(rt/10))}function h(t,e){this.p=t,this.dir=e}function l(t,e,i){this.v=t,this.r=e,this.A=i}function a(t=0,e=0){this.x=t,this.y=e,this.B=function(t){return u(this.x,t.x)&&u(this.y,t.y)},this.rotate=function(t){let e=this.x,i=this.y,n=N.cos(t)*e-N.sin(t)*i,o=N.sin(t)*e+N.cos(t)*i;return new a(n,o)}}function f(t,e){this.a=t,this.b=e,this.B=function(t){return this.a.B(t.a)&&this.b.B(t.b)},this.vertical=function(){return u(this.a.x,this.b.x)},this.C=function(){return u(this.a.y,this.b.y)},this.concat=function(t){this.b=t.b},this.D=function(t){if(u(t.b.y,this.a.y)&&u(t.b.x,this.a.x)){if(u(t.a.x,t.b.x)&&u(this.a.x,this.b.x))return!0;if(u(t.a.y,t.b.y)&&u(this.a.y,this.b.y))return!0}return!1}}function c(t){return t+.5|0}function d(t,e,i){return m(m(t)-m(e))<i||m(m(e)-m(t))<i}function u(t,e){return N.abs(t-e)<nt}function y(t,e){if(e.vertical()){if(w(e.a.y,t.y,e.b.y))return N.abs(t.x-e.a.x)}else if(w(e.a.x,t.x,e.b.x))return N.abs(t.y-e.a.y);let i=N.min(k(t,e.a),k(t,e.b));return N.sqrt(i)}function x(t,e){for(let i of t)if(i.a===e.a&&i.b===e.b)return!1;return!0}function b(t){let e=[];for(let i=0;i<t.length;i++)e.some(e=>e.B(t[i].a))||e.push(t[i].a),e.some(e=>e.B(t[i].b))||e.push(t[i].b);return e}function p(t,e,i=true){xt=[];let n=b(t);n=n.filter(t=>k(e,t)<=ft);let o=[];for(let s of n){let t=new a(s.x-e.x,s.y-e.y),n=N.atan2(t.y,t.x);i&&d(n,Gt.angle,L)&&(o.push(t.rotate(.01)),o.push(t.rotate(-.01))),i||(o.push(t.rotate(.01)),o.push(t.rotate(-.01)))}let r=new a(Gt.x,Gt.y);o.push(r.rotate(L)),o.push(r.rotate(-L));let h=[];for(let l of o){h=[];for(let i of t){let t=g(i,l,e);t&&k(e,t)<=ft&&h.push({m:t,o:i})}h.length&&(h.sort((t,i)=>k(t.m,e)-k(i.m,e)),x(xt,h[0].o)&&xt.push(h[0].o))}}function w(t,e,i){return e>=t&&e<=i||e>=i&&e<=t}function g(t,e,i){if(t.vertical()){let n=(t.a.x-i.x)/e.x;if(n>0){let o=i.y+e.y*n;if(w(t.a.y,o,t.b.y))return{x:t.a.x,y:o}}}else{let n=(t.a.y-i.y)/e.y;if(n>0){let o=i.x+e.x*n;if(w(t.a.x,o,t.b.x))return{x:o,y:t.a.y}}}return null}function m(t){return t<0?t+=2*G:(t>=2*G&&(t%=2*G),t)}function k(t,e){return N.pow(t.x-e.x,2)+N.pow(t.y-e.y,2)}function v(t){return t.x*t.x+t.y*t.y}function P(t,e,i=qt,n=D){let o=new a(t.x-e.x,t.y-e.y),s=N.sqrt(v(o));o.x/=s,o.y/=s;let r=new a(t.x+o.x,t.y+o.y),h=new a(e.x-o.x,e.y-o.y),l=N.sqrt(k(r,i)),f=N.sqrt(k(h,i)),c=N.abs(l-at),d=N.abs(f-at),y={x:(r.x-i.x)*(c/l),y:(r.y-i.y)*(c/l)},x={x:(h.x-i.x)*(d/f),y:(h.y-i.y)*(d/f)},b=0,p=0;u(r.x,h.x)?b=N.sign(y.x)*at:p=N.sign(y.y)*at,n.lineWidth=1,n.beginPath(),n.moveTo(r.x,r.y),n.lineTo(r.x+y.x,r.y+y.y),n.lineTo(r.x+y.x+b,r.y+y.y+p),n.lineTo(h.x+x.x+b,h.y+x.y+p),n.lineTo(h.x+x.x,h.y+x.y),n.lineTo(h.x,h.y),n.lineTo(r.x,r.y),n.fill(),n.closePath()}function T(t,e,i){for(let n of Jt[t])i[n].A=e,Jt[e].push(n);Jt[t]=[]}function S(t){return t*ot+tt+ot/2}function C(t){let e=document.getElementById("msg"),i=e.style.width=window.innerWidth/5,n=e.style.height=window.innerHeight/5,o=[{x:S(0),y:S(0)},{x:S(mt-1)-i,y:S(0)},{x:S(mt-1)-i,y:S(kt-1)-n},{x:S(0),y:S(kt-1)-n}],s=k(qt,o[0]),r=o[0];for(let h of o){let t=k(qt,h);t>s&&(s=t,r=h)}e.style.left=r.x+"px",e.style.top=r.y+"px",e.style.color="#1dfc81",e.style.font="20px Courier New",e.style.textShadow="1px 1px 20px #fff",e.innerHTML=t}function I(t){let e=[];for(let i=0;i<kt;i++)e.push(new Array);let i=parseInt(t.i),n=parseInt(t.h),o=["last"];e[i][n]=new h(0,0);do 1!=Et[i][n].r&&(!e[i][n+1]||n+1<mt&&e[i][n+1]&&e[i][n+1].p>e[i][n].p+1)?(e[i][n+1]=new h(e[i][n].p+1,1),o.push({a:i,b:n}),n+=1):1!=Et[i][n].v&&(!e[i+1][n]||i+1<kt&&e[i+1][n]&&e[i+1][n].p>e[i][n].p+1)?(e[i+1][n]=new h(e[i][n].p+1,2),o.push({a:i,b:n}),i+=1):n>0&&1!=Et[i][n-1].r&&(!e[i][n-1]||n>0&&e[i][n-1]&&e[i][n-1].p>e[i][n].p+1)?(e[i][n-1]=new h(e[i][n].p+1,3),o.push({a:i,b:n}),n-=1):i>0&&1!=Et[i-1][n].v&&(!e[i-1][n]||i>0&&e[i-1][n]&&e[i-1][n].p>e[i][n].p+1)?(e[i-1][n]=new h(e[i][n].p+1,4),o.push({a:i,b:n}),i-=1):o.length&&(vt=o.pop(),i=vt.a,n=vt.b);while(o.length>0);return e}function A(t,e){let i=new a(e.x-t.x,e.y-t.y),n=N.sqrt(v(i));i.x/=n,i.y/=n;let o=i.rotate(O);z.strokeStyle="white",z.beginPath(),z.lineWidth=1,z.moveTo(t.x,t.y);let s=n/15;for(let r=1;r<s;r++){let e=20*N.random()-10;z.lineTo(t.x+i.x*(r/s)*n+o.x*e,t.y+i.y*(r/s)*n+o.y*e)}z.lineTo(e.x,e.y),z.stroke(),z.closePath(),z.beginPath(),z.lineWidth=2,z.moveTo(t.x,t.y);for(let r=1;r<s;r++){let e=10*N.random()-5;z.lineTo(t.x+i.x*(r/s)*n+o.x*e,t.y+i.y*(r/s)*n+o.y*e)}z.lineTo(e.x,e.y),z.stroke(),z.closePath()}function B(){let t=Ut-yt.length+1;if(0==t){qt.h==Qt.h&&qt.i==Qt.i&&(fixTip={x:S(0),y:40+Bt.width/2},tipWire=0,wt=!0);let t=yt[yt.length-2];t.h<qt.h?qt.stop=1:t.i<qt.i?qt.stop=2:t.h>qt.h?qt.stop=3:t.i>qt.i&&(qt.stop=4)}else qt.stop=!1;j.shadowColor="red",j.shadowBlur=14,j.beginPath(),j.clearRect(420,0,70,50),j.font="bold 20px Courier New",j.fillStyle="#bc0010",j.fillText(t+"",440,20),j.closePath(),j.shadowBlur=0}function W(){j.clearRect(700,0,100,ot);let t=0;for(let e in Pt)Pt[e].active||j.drawImage(Bt,c(700+33*t++),6,22,22);dt=!1}function R(){j.clearRect(tt,40,ot*mt,ot*(kt+1)),j.clearRect(tt,0,tt,tt),j.drawImage(Bt,c(S(0)-Bt.width/2),40),j.beginPath(),j.moveTo(S(0),40+Bt.width);let t=0;for(pt=null;t<yt.length-1;t++){j.lineTo(S(yt[t].h),S(yt[t].i));for(let e of bots)if(e.i==yt[t].i&&e.h==yt[t].h){pt=t;break}if(null!==pt)break}if(j.shadowColor="#f00",j.shadowBlur=ot/5,j.lineWidth=4,j.strokeStyle="#680002",j.stroke(),j.lineWidth=1,j.strokeStyle="#bc0010",j.stroke(),j.closePath(),j.shadowBlur=0,t<yt.length-1){for(j.beginPath(),j.moveTo(S(yt[t].h),S(yt[t].i)),t++;t<yt.length-1;t++)j.lineTo(S(yt[t].h),S(yt[t].i));j.lineWidth=4,j.strokeStyle="#330000",j.stroke(),j.lineWidth=1,j.strokeStyle="#4d0000",j.stroke(),j.closePath()}for(let t in Pt)Pt[t].active&&j.drawImage(Bt,N.round(Pt[t].x-Bt.width/2),N.round(Pt[t].y-Bt.width/2))}function F(){let t=I(qt),e=new h(0,0);for(let i in t)for(let n in t[i])t[i][n].p>e.p&&(e=t[i][n],e.i=i,e.h=n);return e}function q(t){if(yt.length){t.F=I(t);let e=new h(1/0,0);for(let i of yt)t.F[i.i][i.h].p<e.p&&(e.dir=t.F[i.i][i.h].dir,e.p=t.F[i.i][i.h].p,e.i=i.i,e.h=i.h);let n=e.i,o=e.h,s=e.dir;for(t.F[n][o].dir=0;0!==s;)switch(s){case 1:o--,s=t.F[n][o].dir,t.F[n][o].dir=3;break;case 2:n--,s=t.F[n][o].dir,t.F[n][o].dir=4;break;case 3:o++,s=t.F[n][o].dir,t.F[n][o].dir=1;break;case 4:n++,s=t.F[n][o].dir,t.F[n][o].dir=2}return e}return t.F=I(qt),qt}function E(t){let e=document.createElement("canvas");e.width=t.width,e.height=t.height,glctx=e.getContext("2d");let i=e.width/20,n=()=>{return N.random()*t.height},o=e=>{return N.random()*(t.height-e)},s=()=>{return N.random()*i-i/2};for(let r=0;r<2;r++){let e=n(),i=o(e),r=s();glctx.drawImage(t,0,e,t.width,i,r,e,t.width,i)}return e}function H(t,e,n){function s(){X.beginPath(),V=D.createPattern(U,"repeat"),X.fillStyle=V,X.fillRect(tt,tt,mt*ot,kt*ot),X.closePath(),X.shadowColor="#fff",X.shadowBlur=ot/2,X.strokeStyle="#1dfc81",X.fillStyle="#1dfc81",X.lineWidth=ot/20,ut.map(t=>{X.beginPath(),X.moveTo(t.a.x,t.a.y),X.lineTo(t.b.x,t.b.y),X.stroke(),X.closePath()}),ut.map(t=>{X.beginPath(),X.fillRect(t.a.x-ot/40,t.a.y-ot/40,ot/20,ot/20),X.fillRect(t.b.x-ot/40,t.b.y-ot/40,ot/20,ot/20),X.closePath()}),X.shadowBlur=0,j.shadowColor="white",j.shadowBlur=20,j.beginPath(),j.font="20px Courier New",j.fillStyle="#1dfc81",j.fillText("wire_left: ",300,20),j.fillText("defenders_left: ",500,20),j.fillText("internalness: "+intrnlns,810,20),j.closePath(),j.shadowBlur=0}mt=e,intrnlns=t,ht=n,D.clearRect(0,0,Z,$),X.clearRect(0,0,Z,$),j.clearRect(0,0,Z,$),z.clearRect(0,0,Z,$),it=!1,ot=~~((Z-tt)/mt),kt=~~(($-tt)/ot),nt=ot/18,st=ot/2,rt=N.sqrt(ot),lt=ot/128,at=2.5*ot,ft=at*at,ct=2*ot,dt=!0,ut=[],yt=[],xt=[],pt=null,wt=!1,ee=30,gt={G:ot,H:ot,I:ot,J:ot},Pt=[],bots=[];for(let r=0;r<ht;r++)Pt.push(new i);Tt=2,St=document.createElement("canvas"),St.width=St.height=ct,Ct=St.getContext("2d"),Ct.beginPath(),It=new a(N.cos(L),N.sin(L)),It=It.rotate(O),At=Ct.createLinearGradient(0-It.x*ct,0-It.y*ct,0+It.x*ct,0+It.y*ct),At.addColorStop(0,"red"),At.addColorStop(1,"transparent"),Ct.fillStyle=At,Ct.moveTo(0,0),Ct.lineTo(ct,0),Ct.lineWidth=4,Ct.strokeStyle="red",Ct.stroke(),Ct.arc(0,0,ct,0,O),Ct.fill(),Ct.closePath(),Bt=document.createElement("canvas"),Bt.width=Bt.height=c(ot/5),Wt=Bt.getContext("2d"),Wt.beginPath(),Wt.fillStyle="#680002",Wt.fillRect(c(Bt.width/2-ot/10),c(Bt.width/2-ot/10),c(ot/5),c(ot/5)),Wt.fillStyle="#bc0010",Wt.shadowBlur=0,Wt.fillRect(Bt.width/2-ot/14,Bt.width/2-ot/14,ot/7,ot/7),Wt.closePath(),Rt=document.createElement("canvas"),Rt.style.background="rgba(0,0,0,0)",Rt.width=Rt.height=c(ot/3),Ft=Rt.getContext("2d"),Ft.beginPath(),Ft.shadowColor=Q,Ft.shadowBlur=c(ot/5),Ft.fillStyle=Q,Ft.fillRect(c(Rt.width/2-ot/10),c(Rt.width/2-ot/10),c(ot/5),c(ot/5)),Ft.shadowBlur=0,Ft.closePath(),qt={i:0,h:0,x:tt+st,y:tt+st,step:3,stop:!1,K:!1,k:null,L(t){this.step=c(t/5*(rt/10))},l(){this.k=null;let t=1/0;for(let e in bots){let i=k(bots[e],this);if(bots[e].i===this.i&&bots[e].h===this.h)return void(this.k=e);let n=N.atan2(bots[e].y-this.y,bots[e].x-this.x);if(d(n,Gt.angle,G/16)){let n=[],o=new a(Nt.M-this.x,Nt.N-this.y);for(let s of ut){let t=g(s,o,this);t&&n.push({m:t,o:s})}n.length?(n.sort((t,e)=>k(t.m,this)-k(e.m,this)),k(n[0].m,this)>i&&i<t&&(this.k=e,t=i)):i<t&&(this.k=e,t=i)}}}},Et=[],Ht=[],Jt=new Array(mt),Nt={x:qt.x,y:qt.y},Gt={update(){for(let t in this)"function"!=typeof this[t]&&(this[t]=null);this.y=Nt.y-qt.y,this.x=Nt.x-qt.x,this.angle=N.atan2(this.y,this.x),this.angle<L&&this.angle>-L?this.right=!0:this.angle<3*L&&this.angle>L?this.O=!0:this.angle<-L&&this.angle>-3*L?this.P=!0:(this.angle<-3*L||this.angle>3*L)&&(this.left=!0)}};for(let h=0;h<mt;h++){Ht.push(new l(0,0,h));let t=[h];Jt[h]=JSON.parse(JSON.stringify(t))}for(let r=0;r<kt;r++){for(let t=0;t<mt;t++){if(Ht[t].r=0,Ht[t].v){let e=Jt[Ht[t].A].indexOf(t);Jt[Ht[t].A].splice(e,1),Ht[t].A=-1}Ht[t].v=0}for(let t=0;t<mt;t++)if(Ht[t].A==-1){Ht[t].A=0;for(let e=0;e<mt;e++)e!=t&&Ht[e].A===Ht[t].A&&(Ht[t].A++,e=-1);Jt[Ht[t].A].push(t)}for(let t=0;t<mt-1;t++)N.round(N.random())?Ht[t].r=1:Ht[t+1].A!=Ht[t].A&&T(Ht[t+1].A,Ht[t].A,Ht);Ht[mt-1].r=1;let e=new Array(mt).fill(0);for(let t=0;t<mt;t++)e[Ht[t].A]++;for(let t=0;t<mt;t++)N.round(N.random())&&e[Ht[t].A]>1&&(Ht[t].v=1,e[Ht[t].A]--);if(r===kt-1){for(let t=0;t<mt;t++)Ht[t].v=1,t+1<mt&&Ht[t].A!=Ht[t+1].A&&(Ht[t].r=0,T(Ht[t+1].A,Ht[t].A,Ht));Ht[mt-1].r=1}Et.push(JSON.parse(JSON.stringify(Ht)))}Ot={key38:!1,key40:!1,key39:!1,key37:!1,key87:!1,key83:!1,key68:!1,key65:!1},Lt=64*lt,Mt=0,Dt=0,Kt=0,Xt=0,Yt=0,jt=0,_t=0,zt=0;let u,y;for(let x=0;x<2;x++)for(let r=0;r<kt;r++)for(let h=0;h<mt;h++)0===r&&0===x&&(u=tt+h*ot,y=tt-Lt/2),0===h&&1===x&&(u=tt-Lt/2,y=tt+r*ot-Lt/2),1===Et[r][h].r&&1===x&&(u=tt+(h+1)*ot-Lt/2,y=tt+r*ot-Lt/2,h<mt-1&&(Kt=Xt=Yt=jt=_t=zt=0,0!==r&&1!==Et[r-1][h].r||(Kt=Lt),r===kt-1&&(Xt=Lt),!Kt&&r>0&&Et[r-1][h].v&&(Yt=Lt),r+1<kt&&Et[r][h].v&&(jt=Lt),!Kt&&r>0&&Et[r-1][h+1].v&&(_t=Lt),r+1<kt&&Et[r][h+1].v&&(zt=Lt),ut.push(new f(new a(u,y+Kt+Yt),new a(u,y+3*Lt-Xt-jt))),ut.push(new f(new a(u+Lt,y+Kt+_t),new a(u+Lt,y+3*Lt-Xt-zt))),r>0&&!Et[r-1][h].r&&ut.push(new f(new a(u,y),new a(u+Lt,y))),r+1<kt&&!Et[r+1][h].r&&ut.push(new f(new a(u,y+3*Lt),new a(u+Lt,y+3*Lt))))),1===Et[r][h].v&&0===x&&(u=tt+h*ot,y=tt+(r+1)*ot-Lt/2,r<kt-1&&(Mt=Dt=0,(1===Et[r][h].r||r+1<kt&&1===Et[r+1][h].r)&&(Mt=Lt/2),(0===h||1===Et[r][h-1].r||r+1<kt&&1===Et[r+1][h-1].r)&&(Dt=Lt/2),ut.push(new f(new a(u+Dt,y),new a(u-Mt+2*Lt,y))),ut.push(new f(new a(u+Dt,y+Lt),new a(u-Mt+2*Lt,y+Lt))),!Mt&&h+1<mt&&!Et[r][h+1].v&&ut.push(new f(new a(u+2*Lt,y),new a(u+2*Lt,y+Lt))),!Dt&&h>0&&!Et[r][h-1].v&&ut.push(new f(new a(u,y),new a(u,y+Lt)))));for(let r=0;r<ut.length;r++)if(ut[r])for(let h=0;h<ut.length;h++)ut[h]&&ut[h].D(ut[r])&&(ut[r].concat(ut[h]),ut[h]=null,h=-1);ut=ut.filter(t=>t),U.complete?s():U.onload=s,Qt=F(),o(ht),Ut=Qt.p,Vt=0,Zt=2,te=!0,D.fillStyle=Q,D.fillRect(0,0,Z,$),C("> reached internals.<br>> power loss detected.<br>> viewing range limited. <br>> provide power supply.<br>> WASD to move<br>> mouse to look around<br>> "),B()}function J(t){if(!it){if($t){let e=t-$t;qt.L(e),r(e),n(e),$t=t}else $t=t,et=t;D.fillRect(qt.x-at,qt.y-at,2*at,2*at),z.clearRect(0,0,Z,$),Ot.key87&&(Gt.right&&1!=Et[qt.i][qt.h].r&&gt.H>=ot&&gt.G>=ot&&gt.J>=ot&&(!qt.stop||3==qt.stop)&&(gt.H-=ot),Gt.P&&qt.i>0&&1!=Et[qt.i-1][qt.h].v&&gt.J>=ot&&gt.H>=ot&&gt.I>=ot&&(!qt.stop||2==qt.stop)&&(gt.J-=ot),Gt.O&&1!=Et[qt.i][qt.h].v&&gt.G>=ot&&gt.H>=ot&&gt.I>=ot&&(!qt.stop||4==qt.stop)&&(gt.G-=ot),Gt.left&&qt.h>0&&1!=Et[qt.i][qt.h-1].r&&gt.I>=ot&&gt.G>=ot&&gt.J>=ot&&(!qt.stop||1==qt.stop)&&(gt.I-=ot)),gt.H<ot?(qt.x+=qt.step,gt.H+=qt.step,gt.H>=ot&&qt.h++):gt.I<ot?(qt.x-=qt.step,gt.I+=qt.step,gt.I>=ot&&qt.h--):gt.J<ot?(qt.y-=qt.step,gt.J+=qt.step,gt.J>=ot&&qt.i--):gt.G<ot&&(qt.y+=qt.step,gt.G+=qt.step,gt.G>=ot&&qt.i++);for(let e in bots)!te&&bots[e].F||q(bots[e]),1===bots[e].F[bots[e].i][bots[e].h].dir?bots[e].dir=1:2===bots[e].F[bots[e].i][bots[e].h].dir?bots[e].dir=2:3===bots[e].F[bots[e].i][bots[e].h].dir?bots[e].dir=3:4===bots[e].F[bots[e].i][bots[e].h].dir?bots[e].dir=4:0===bots[e].F[bots[e].i][bots[e].h].dir&&(bots[e].dir=0,bots[e].s||(et=t,R(),bots[e].s=!0)),bots[e].q||(1===bots[e].dir?(bots[e].x-=Tt,st+tt+bots[e].h*ot-bots[e].x>=ot&&bots[e].h--):2===bots[e].dir?(bots[e].y-=Tt,st+tt+bots[e].i*ot-bots[e].y>=ot&&bots[e].i--):3===bots[e].dir?(bots[e].x+=Tt,bots[e].x-tt-bots[e].h*ot-st>=ot&&bots[e].h++):4===bots[e].dir&&(bots[e].y+=Tt,bots[e].y-tt-bots[e].i*ot-st>=ot&&bots[e].i++));D.globalCompositeOperation="destination-out",D.beginPath(),D.moveTo(qt.x,qt.y),D.arc(qt.x,qt.y,at,Gt.angle-L,Gt.angle+L),D.fill(),D.closePath(),D.globalCompositeOperation="source-over",p(ut.filter(t=>y(qt,t)<at),qt);for(let e of xt)P(e.a,e.b);if(Gt.update(),D.drawImage(Bt,c(qt.x-Bt.width/2),c(qt.y-Bt.width/2)),te=!1,0===yt.length?yt.push({h:0,i:0}):qt.h==yt[yt.length-1].h&&qt.i==yt[yt.length-1].i||(yt.length>1&&qt.h===yt[yt.length-2].h&&qt.i===yt[yt.length-2].i?(yt.pop(),te=!0,B(),R()):(yt.push({h:qt.h,i:qt.i}),te=!0,B(),R())),!te&&dt&&(R(),W()),D.beginPath(),yt.length>1){D.moveTo(S(yt[yt.length-2].h),S(yt[yt.length-2].i));let t=new a(qt.x-S(yt[yt.length-2].h),qt.y-S(yt[yt.length-2].i));t.x*=.9,t.y*=.9,D.lineTo(S(yt[yt.length-2].h)+t.x,S(yt[yt.length-2].i)+t.y)}else D.moveTo(S(0),40),D.lineTo(qt.x,qt.y-Bt.width/2);null===pt?(D.lineWidth=4,D.strokeStyle="#680002",D.stroke(),D.lineWidth=1,D.strokeStyle="#bc0010",D.stroke(),D.closePath()):(D.lineWidth=4,D.strokeStyle="#330000",D.stroke(),D.lineWidth=1,D.strokeStyle="#4d0000",D.stroke(),D.closePath()),z.beginPath(),z.arc(S(Qt.h),S(Qt.i),Vt,0,2*G),Vt+=Zt,(Vt>ot/2||Vt<2)&&(Zt=-Zt);let i=z.createRadialGradient(S(Qt.h),S(Qt.i),ot/16,S(Qt.h),S(Qt.i),ot/3);i.addColorStop(0,"#bc0010"),i.addColorStop(1,"transparent"),z.fillStyle=i,z.fill(),z.fillRect(S(Qt.h)-ot/16,S(Qt.i)-ot/16,ot/8,ot/8),z.closePath();for(let e in Pt)Pt[e].active&&(z.save(),z.translate(c(Pt[e].x),c(Pt[e].y)),z.rotate(Pt[e].arc),z.drawImage(St,0,0),Pt[e].arc-=bt,Pt[e].arc%=2*G,z.restore());for(let e in bots){let t=null,i=null;for(let n in Pt)if(Pt[n].active){if(Pt[n].k===e){t=e,i=n;break}if(!Pt[n].k&&k(Pt[n],bots[e])<=ct*ct&&(Pt[n].l(e),Pt[n].k===e)){t=e,i=n;break}}if(bots[e].q||qt.k==e||t==e)if(bots[e].q){z.beginPath(),z.fillStyle=Q;let t=bots[e].q*(ot/5)/ee;z.fillRect(bots[e].x-t/2,bots[e].y-t/2,t,t),z.closePath(),bots[e].q--,1===bots[e].q&&(bots[e].q=!1,qt.k===e&&(qt.k=null),i&&Pt[i].k===e&&(Pt[i].k=null),bots[e].u(),R())}else bots[e].q=ee;else z.drawImage(Rt,c(bots[e].x-Rt.width/2),c(bots[e].y-Rt.width/2))}if(qt.K){let t,e;qt.k?(t=bots[qt.k].x,e=bots[qt.k].y):(t=Nt.M,e=Nt.N),A(qt,{x:t,y:e})}for(let o in Pt){let t=Pt[o].k;t&&Pt[o].active&&A(Pt[o],bots[t])}if(wt){let t=new a(S(yt[tipWire].h),S(yt[tipWire].i)),e=new a(t.x-fixTip.x,t.y-fixTip.y),i=N.sqrt(v(e));fixTip.x+=e.x/i*(ot/8),fixTip.y+=e.y/i*(ot/8),z.beginPath(),z.lineWidth=2,z.strokeStyle="#1dfc81",z.moveTo(S(0),40+Bt.width/2);for(let n=0;n<tipWire;n++)z.lineTo(S(yt[n].h),S(yt[n].i));z.lineTo(fixTip.x,fixTip.y),z.stroke(),z.closePath(),k(fixTip,t)<ot*ot/16&&(tipWire===pt?wt=!1:tipWire==yt.length-1?(wt=!1,H(2,13,3)):(fixTip.x=t.x,fixTip.y=t.y,tipWire++))}}t-et<2e3&&D.drawImage(E(M),0,0),requestAnimationFrame(J)}const N=Math,G=N.PI,O=G/2,L=G/4,M=document.getElementById("c"),D=M.getContext("2d"),K=document.getElementById("c2"),X=K.getContext("2d"),Y=document.getElementById("c3"),j=Y.getContext("2d"),_=document.getElementById("c4"),z=_.getContext("2d");K.style.backgroundColor="#000";const Q="#000";let U=new Image;U.src="floor4.png";let V;const Z=M.width=K.width=Y.width=_.width=window.innerWidth,$=(window.innerHeight/2,M.height=K.height=Y.height=_.height=window.innerHeight),tt=100;let et,it,nt,ot,st,rt,ht,lt,at,ft,ct,dt,ut,yt,xt,bt,pt,wt,gt,mt,kt,vt,Pt,Tt,St,Ct,It,At,Bt,Wt,Rt,Ft,qt,Et,Ht,Jt,Nt,Gt,Ot,Lt,Mt,Dt,Kt,Xt,Yt,jt,_t,zt,Qt,Ut,Vt,Zt,$t,te,ee;U.onload=function(){function t(c){if(D.clearRect(0,0,Z,$),i?r||(c-i>500&&(s=!s,i=c),c-n>3e3&&(n=c,r=!0,f=!0,s=!1)):(i=c,n=c),s)D.beginPath(),D.shadowColor="white",D.shadowBlur=40,D.beginPath(),D.font="15px Courier New",D.fillStyle="#1dfc81",D.fillText("> Internal error",10,30),D.closePath();else if(r){if(D.shadowBlur=0,c-n>2e3&&(o-=.005,o<.5))return H(1,10,2),document.addEventListener("mousemove",function(t){let e=M.getBoundingClientRect();Nt.M=t.pageX-e.left,Nt.N=t.pageY-e.top;let i=new a(t.pageX-e.left-qt.x,t.pageY-e.top-qt.y),n=v(i);n<ft/4?(n=N.sqrt(n),Nt.x=qt.x+i.x*(.5*at/n),Nt.y=qt.y+i.y*(.5*at/n)):(Nt.x=t.pageX-e.left,Nt.y=t.pageY-e.top)}),document.addEventListener("keydown",function(t){if(Ot["key"+t.keyCode]=!0,118===t.keyCode&&(it=!it),32===t.keyCode){t.preventDefault();let e=!1;dt=!0;for(let i in Pt)if(Pt[i].active&&Pt[i].i===qt.i&&Pt[i].h===qt.h){Pt[i].j(),e=!0;break}if(!e)for(let i in Pt)if(Pt[i].g(qt.i,qt.h))break}}),document.addEventListener("mousedown",function(t){qt.K=!0,qt.l()}),document.addEventListener("mouseup",function(t){qt.K=!1}),document.addEventListener("keyup",function(t){Ot["key"+t.keyCode]=!1}),void J();!f&&c-i>h&&(f=!0,h=2e3*N.random(),i=c),f?(D.drawImage(E(e),0,$/2-1/o*300,4*Z/o,600/o),c-i>l&&(f=!1,i=c,l=250*N.random())):D.drawImage(e,0,$/2-1/o*300,4*Z/o,600/o)}requestAnimationFrame(t)}V=D.createPattern(U,"repeat");let e=document.createElement("canvas");e.width=4*Z,e.height=600,ictx=e.getContext("2d"),ictx.beginPath(),ictx.beginPath(),ictx.fillStyle="#000",ictx.fillRect(0,0,e.R,e.height),ictx.font="500px Courier New",ictx.strokeStyle="#1dfc81",ictx.lineWidth=4,ictx.fillStyle=V,ictx.fillText("Internal error",0,500),ictx.strokeText("Internal error",0,500),ictx.closePath();let i,n,o=2.5,s=!1,r=!1,h=1500*N.random(),l=500*N.random()+500,f=!1;t()},e.S=t}({},function(){return this}());
+const m = Math;
+const pi = m.PI;
+const halfPi = pi/2;
+const quarterPi = pi/4;
+const canvas = document.getElementById("c");
+const ctx = canvas.getContext("2d"); // dynamic
+const canvas2 = document.getElementById("c2");
+const ctx2 = canvas2.getContext("2d"); // static
+const canvas3 = document.getElementById("c3");
+const ctx3 = canvas3.getContext("2d"); // halfstatic
+const canvas4 = document.getElementById("c4");
+const ctx4 = canvas4.getContext("2d"); // dynamic
+
+//colors
+canvas2.style.backgroundColor = "#000"; //around maze fill
+const shadowCol = "#000";
+let floor = new Image();
+floor.src = "floor4.png";
+let floorPat; 
+const w = canvas.width = canvas2.width = canvas3.width = canvas4.width = window.innerWidth;
+const winHalfH = window.innerHeight/2;
+const h = canvas.height = canvas2.height = canvas3.height= canvas4.height = window.innerHeight;
+const itab = 100; // initial tab
+
+let corns,msgPos,trans,PAUSE,eps,tab,halfTab,rootTab,N,intrnls,ws,vision,sqVision,cannonR,cannonsChanged,segments,wireStack,visibles,cannonStep,jam,fix,go,width,height,eye1,eye2,temp,cannons,botStep,radar,r_ctx,grdVec,grd2,redSquare,sq_ctx,blackSquare,bsq_ctx,player,maze,row,sets,cursor,dir,KEY,lw_w,pad1,pad2,pad3,pad4,pad5,pad6,pad7,pad8,bug,wireLength,blinkRad,blinkStep,lastdT,wireChanged,dieStep;
+let bugMsg = defMsg = false;
+function cannon(){
+    this.active = false;
+    this.activate = function(i,j){
+        if(this.active) 
+            return false;
+        this.active = true;
+        this.j = j; this.i = i;
+        this.x = jx(j); this.y = jx(i);
+        this.arc = 0;
+        return true;
+    };
+    this.deactivate = function(){
+        this.active = false;
+    };
+    this.HIT = null;
+    this.hit = function(i){
+        this.HIT = null;
+        let target = m.atan2(bots[i].y-this.y,bots[i].x-this.x);
+        if(bots[i].i===this.i && bots[i].j===this.j){
+            this.HIT = i;
+            return;
+        }
+        if(inRange(target,mod360(this.arc+quarterPi),quarterPi)){
+            let intersects = [];
+            let ray = new dot(bots[i].x-this.x, bots[i].y-this.y);
+            for (let seg of segments){
+                let dot = newSegRay(seg,ray,this);
+                if(dot) intersects.push({dot:dot,seg:seg});
+            }
+            let botDist = sqdist(bots[i],this);
+            if(intersects.length){
+               intersects.sort((a,b)=>sqdist(a.dot,this)-sqdist(b.dot,this));
+                if(sqdist(intersects[0].dot,this) > botDist){
+                    this.HIT = i;
+                }
+            }
+            else{
+                this.HIT = i;
+            }
+        }
+    };
+}
+
+function cannonsNewStep(diff){
+    cannonStep = diff/500;
+}
+function spawnBots(n){
+    let f = Vfield(bug);
+    let i = player.i, j = player.j;
+    wireStack.push({i:i,j:j});
+    while(f[i][j].dir!=0){
+        switch(f[i][j].dir){
+            case 1:
+                j--;
+                break;
+            case 2:
+                i--;
+                break;
+            case 3:
+                j++;
+                break;
+            case 4:
+                i++;
+                break;
+        }
+        wireStack.push({i:i,j:j});
+    }
+    let spawn = {}, min;
+    for(let i=0; i<n; i++){
+        while(1){// DANGER
+            spawn.i = ~~(m.random()*height);
+            spawn.j = ~~(m.random()*width);
+            let b = new bot(spawn.i, spawn.j);
+            min = bugField(b);
+            if(min.dist > 2){
+                bots.push(b);
+                break;
+            }
+        }
+    }
+    wireStack = [];
+}
+function bot(i,j){// default dir & step
+    this.i = i;
+    this.j = j;
+    this.x = jx(this.j);
+    this.y = jx(this.i);
+    this.dir = 0;
+    this.dying = false;
+    this.jam=false;
+    this.spawn = {i:this.i,j:this.j};
+    this.respawn = function(){
+        let sp={}, min;
+        while(1){// DANGER
+            sp.i = ~~(m.random()*height);
+            sp.j = ~~(m.random()*width);
+            this.i = sp.i; this.j=sp.j;
+            min = bugField(this);
+            if(min.dist > 2){
+                break;
+            }
+        }
+        
+       /* this.i = this.spawn.i;
+        this.j = this.spawn.j;*/
+        this.x = jx(this.j);
+        this.y = jx(this.i);
+        this.dir = 0;
+        this.dying = false;
+        this.jam=false;
+    }
+}
+
+function botsNewStep(diff){
+    botStep = round((diff/8)*(rootTab/10));
+}
+
+function tile(dist,dir){ // vector field units
+    this.dist = dist;
+    this.dir = dir;
+}
+function cell(lower, right, set){ // cell structure
+    this.l = lower;  // right and lower walls
+    this.r = right; // boolean parameters standing for 
+    this.s = set; // number of set cell belongs to
+}
+
+
+function dot(x=0,y=0){
+    this.x = x;
+    this.y = y;
+    this.eq = function(o){
+        return epsEq(this.x,o.x) && epsEq(this.y,o.y);
+    };
+    this.rotate = function(ang){
+        let x = this.x, y = this.y;
+        let newX = m.cos(ang)*x-m.sin(ang)*y;
+        let newY = m.sin(ang)*x+m.cos(ang)*y;
+        return new dot(newX,newY);
+    };
+}
+function segment(a,b){
+    this.a = a;
+    this.b = b;
+    this.eq = function(seg){
+        return this.a.eq(seg.a) && this.b.eq(seg.b);
+    };
+    this.vertical = function(){
+        return epsEq(this.a.x, this.b.x); 
+    };
+    this.horizontal = function(){
+        return epsEq(this.a.y, this.b.y);
+    };
+    this.concat = function(seg){
+        this.b = seg.b;
+    };
+    this.prolongs = function(s){
+        if(epsEq(s.b.y, this.a.y) && epsEq(s.b.x, this.a.x)){
+            if(epsEq(s.a.x, s.b.x))
+                if(epsEq(this.a.x, this.b.x))
+                        return true;
+            if(epsEq(s.a.y, s.b.y))
+                if(epsEq(this.a.y, this.b.y))
+                        return true;    
+        }
+        return false;
+    };
+}
+function round(x){
+    return (x+.5)|0;
+}
+function inRange(ang1,ang2,range){
+    return mod360(mod360(ang1)-mod360(ang2)) < range || mod360(mod360(ang2)-mod360(ang1)) < range;
+}
+
+function epsEq(a,b){
+    return m.abs(a-b) < eps;
+}
+function distToSeg(source, seg){
+    if(seg.vertical()){
+        if(between(seg.a.y,source.y,seg.b.y)){
+            return m.abs(source.x-seg.a.x);
+        }
+    }
+    else{
+        if(between(seg.a.x,source.x,seg.b.x))
+            return m.abs(source.y-seg.a.y);
+    }
+    let sq = m.min(sqdist(source,seg.a), sqdist(source,seg.b));
+    return m.sqrt(sq);
+}
+function notConsistsIn(arr,seg){ // works faster than array.some()
+    for(let i of arr){
+        if(i.a===seg.a&&i.b===seg.b) return false;
+    }
+    return true;
+}
+function getUniqueDots(segments){
+    let dots = [];
+    for(let i=0;i<segments.length;i++){
+        if(!dots.some(o=>o.eq(segments[i].a)))dots.push(segments[i].a);
+        if(!dots.some(o=>o.eq(segments[i].b)))dots.push(segments[i].b);
+    }
+    return dots;
+}
+function getVisibles(segments,source,lim=true){
+    visibles = [];
+    let dots = getUniqueDots(segments);
+    dots = dots.filter(o=>sqdist(source,o)<=sqVision);
+    let rays = [];
+    for(let o of dots){
+        let ray = new dot(o.x-source.x, o.y-source.y);
+        let rayAng = m.atan2(ray.y,ray.x);
+        if(lim && inRange(rayAng,dir.angle,quarterPi)){
+            //rays.push(ray);
+            rays.push(ray.rotate(0.01));
+            rays.push(ray.rotate(-0.01));
+        }
+        if(!lim){
+            rays.push(ray.rotate(0.01));
+            rays.push(ray.rotate(-0.01));
+        }
+    }
+    let aux = new dot(dir.x,dir.y);
+    rays.push(aux.rotate(quarterPi));
+    rays.push(aux.rotate(-quarterPi));
+    let intersects = [];
+    for(let ray of rays){ 
+        intersects = [];
+        for(let seg of segments){
+            let doT = newSegRay(seg,ray,source);
+            if(doT && sqdist(source,doT)<=sqVision){ 
+                intersects.push({dot:doT,seg:seg});
+            }
+        }
+        if(intersects.length){
+            intersects.sort((a,b)=>sqdist(a.dot,source)-sqdist(b.dot,source));
+            if(notConsistsIn(visibles,intersects[0].seg)){
+                visibles.push(intersects[0].seg);
+            }
+        }
+    }
+}
+function between(a,x,b){
+    if(x>=a&&x<=b || x>=b&&x<=a)return true;
+    return false;
+}
+function newSegRay(seg,ray,s){
+    if(seg.vertical()){
+        let t = (seg.a.x-s.x)/ray.x;
+        if(t > 0){
+            let y = s.y+ray.y*t;
+            if(between(seg.a.y,y,seg.b.y)){
+                return {x:seg.a.x, y:y};
+            }
+        }
+    }
+    else{
+        let t = (seg.a.y-s.y)/ray.y;
+        if(t > 0){
+            let x = s.x+ray.x*t;
+            if(between(seg.a.x,x,seg.b.x)){
+                return {x:x, y:seg.a.y};
+            }
+        }
+    }
+    return null;
+}
+function mod360(x){
+    if(x<0) return x+=pi*2;
+    if(x>=pi*2)x%=pi*2;
+    return x;
+}
+
+function sqdist(a,b){
+    return m.pow(a.x-b.x, 2) + m.pow(a.y-b.y, 2);
+}
+function sqmod(a){
+    return a.x*a.x + a.y*a.y;
+}
+function shadow(a,b,source=player,context=ctx){
+    let tmp = new dot(a.x-b.x, a.y-b.y);
+    let tmpLen = m.sqrt(sqmod(tmp));
+    tmp.x/=tmpLen;
+    tmp.y/=tmpLen;
+    let A = new dot(a.x+tmp.x,a.y+tmp.y),
+    B = new dot(b.x-tmp.x,b.y-tmp.y);
+
+    let l1=m.sqrt(sqdist(A,source));
+    let l2=m.sqrt(sqdist(B,source));
+    let newL1 = m.abs(l1-vision);
+    let newL2 = m.abs(l2-vision);
+
+    let v1 = {x:(A.x-source.x)*(newL1/l1),y:(A.y-source.y)*(newL1/l1)};
+    let v2 = {x:(B.x-source.x)*(newL2/l2),y:(B.y-source.y)*(newL2/l2)};
+
+    let vx=0,vy=0;
+    if(epsEq(A.x,B.x)){
+        vx = m.sign(v1.x)*vision;
+    }
+    else
+        vy = m.sign(v1.y)*vision;
+
+    // context.fillStyle = col;
+    // context.strokeStyle = col;
+    context.lineWidth = 1;
+    context.beginPath();
+    context.moveTo(A.x,A.y);
+    context.lineTo(A.x+v1.x,A.y+v1.y);
+
+    context.lineTo(A.x+v1.x+vx,A.y+v1.y+vy);
+    context.lineTo(B.x+v2.x+vx,B.y+v2.y+vy);
+
+    context.lineTo(B.x+v2.x,B.y+v2.y);
+    context.lineTo(B.x,B.y);
+    context.lineTo(A.x,A.y);
+    //context.stroke();
+    context.fill();
+    context.closePath();
+}
+
+function merge(set1,set2,row){
+    for(let s of sets[set1]){
+        row[s].s = set2;
+        sets[set2].push(s);
+    }
+    sets[set1] = []; //delete set1
+}
+function jx(j){
+    return j*tab+itab+tab/2;
+}
+function drawMsg(msg){
+    let cntnr = document.getElementById('msg');
+    let c_w = cntnr.style.width = window.innerWidth/5;
+    let c_h = cntnr.style.height = window.innerHeight/5;
+    corns = [{x:jx(0),y:jx(0)}, 
+    {x:jx(width-1)-c_w,y:jx(0)},
+    {x:jx(width-1)-c_w,y:jx(height-1)-c_h},
+    {x:jx(0),y:jx(height-1)-c_h} ];
+    
+    let max = sqdist(player,corns[0]);
+    let far = corns[0];
+    for(let c of corns){
+        let tmp = sqdist(player,c);
+        if(tmp > max){
+            max = tmp;
+            far = c;
+        }
+    }
+    cntnr.style.left = far.x + 'px';
+    cntnr.style.top = far.y + 'px';
+    cntnr.style.color = '#1dfc81';
+    cntnr.style.font = '20px Courier monospace';
+    cntnr.style.textShadow = '1px 1px 20px #fff'
+
+
+    cntnr.innerHTML = msg;
+    return far;
+    
+}
+
+//generates vector field (dynamic matrix for bots' moves)
+function Vfield(source){
+    let field = [];
+    for(let i=0;i<height;i++)
+        field.push(new Array());
+    let i = parseInt(source.i);
+    let j = parseInt(source.j);
+    let stack=["last"]; // stop item
+    field[i][j]= new tile(0,0);
+    
+    do{
+        if(maze[i][j].r!=1 && (!field[i][j+1] || j+1<width&&field[i][j+1] && field[i][j+1].dist > field[i][j].dist+1)){
+            field[i][j+1] = new tile(field[i][j].dist+1, 1);
+            stack.push({a:i,b:j});
+            j=j+1;
+        }
+        else if(maze[i][j].l!=1 && (!field[i+1][j] || i+1<height&&field[i+1][j] && field[i+1][j].dist > field[i][j].dist+1)){
+            field[i+1][j] = new tile(field[i][j].dist+1, 2);
+            stack.push({a:i,b:j});
+            i=i+1;
+        }
+        else if(j>0&&maze[i][j-1].r!=1 && (!field[i][j-1] || j>0&&field[i][j-1] && field[i][j-1].dist > field[i][j].dist+1)){
+            field[i][j-1] = new tile(field[i][j].dist+1, 3);
+            stack.push({a:i,b:j});
+            j=j-1;
+        }
+        else if(i>0&&maze[i-1][j].l!=1 && (!field[i-1][j] || i>0&&field[i-1][j] && field[i-1][j].dist > field[i][j].dist+1)){
+            field[i-1][j]=new tile(field[i][j].dist+1, 4);
+            stack.push({a:i,b:j});
+            i=i-1;
+        }
+        else if(stack.length){
+            temp = stack.pop();
+            i=temp.a; j=temp.b;
+        }
+    }while(stack.length > 0);
+    return field;
+}
+function drawElectro(source,target){
+    let vec = new dot(target.x-source.x,target.y-source.y);
+    let len = m.sqrt(sqmod(vec));
+    vec.x/=len; 
+    vec.y/=len;
+    let vec2 = vec.rotate(halfPi);
+    ctx4.strokeStyle = 'white';
+
+    ctx4.beginPath();
+    ctx4.lineWidth = 1;
+    ctx4.moveTo(source.x,source.y);
+    let parts = len/15;
+    for(let i=1;i<parts;i++){
+        let r = m.random()*20-10;
+        ctx4.lineTo(source.x+vec.x*(i/parts)*len+vec2.x*r,source.y+vec.y*(i/parts)*len+vec2.y*r);
+    }
+    ctx4.lineTo(target.x,target.y);
+    ctx4.stroke();
+    ctx4.closePath();
+    ctx4.beginPath();
+    ctx4.lineWidth = 2;
+    ctx4.moveTo(source.x,source.y);
+    for(let i=1;i<parts;i++){
+        let r = m.random()*10-5;
+        ctx4.lineTo(source.x+vec.x*(i/parts)*len+vec2.x*r,source.y+vec.y*(i/parts)*len+vec2.y*r);
+    }
+    ctx4.lineTo(target.x,target.y);
+    ctx4.stroke();
+    ctx4.closePath();
+}
+function countWire(){
+    let len = wireLength-wireStack.length+1;
+    if(len==0){
+        if(player.j==bug.j && player.i==bug.i){
+            fixTip = {x: jx(0), y: 40+redSquare.width/2};
+            tipWire = 0;
+            fix = true;
+        }
+        else {
+            msgPos = drawMsg('> you ran short of cable. <br>> find another way. <br>>');
+        }
+        let lst = wireStack[wireStack.length-2];
+        if(lst.j < player.j)
+            player.stop = 1;
+        else if(lst.i < player.i)
+            player.stop = 2;
+        else if(lst.j > player.j)
+            player.stop = 3;
+        else if(lst.i > player.i)
+            player.stop = 4;
+    }
+    else player.stop = false;
+    ctx3.shadowColor = 'red';
+    ctx3.shadowBlur = 14;
+    ctx3.beginPath();
+    ctx3.clearRect(420,0,70,50);
+    ctx3.font = 'bold 20px Courier monospace';
+    ctx3.fillStyle = '#bc0010';
+    ctx3.fillText(len+'',440,20);
+    ctx3.closePath();
+    ctx3.shadowBlur = 0;
+}
+function countCannons(){
+    ctx3.clearRect(700,0,100,tab);
+    let j = 0;
+    for(let i in cannons)
+        if(!cannons[i].active)
+            ctx3.drawImage(redSquare,round(700+(j++)*33), 6, 22, 22);
+    
+    cannonsChanged = false;
+}
+function drawWire(){
+    ctx3.clearRect(itab,40,tab*width,tab*(height+1));
+    ctx3.clearRect(itab,0,itab,itab);
+    ctx3.drawImage(redSquare,round(jx(0)-redSquare.width/2), 40);
+    
+    ctx3.beginPath();
+    ctx3.moveTo(jx(0), 40+redSquare.width);
+    let i=0; jam=null;
+    for(;i<wireStack.length-1;i++){
+        ctx3.lineTo(jx(wireStack[i].j), jx(wireStack[i].i));
+        for(let b of bots)
+            if(b.i==wireStack[i].i && b.j==wireStack[i].j){
+                jam = i; break;
+            }
+        if(jam!==null) break;
+    }
+    ctx3.shadowColor = '#f00';
+    ctx3.shadowBlur = tab/5;
+    ctx3.lineWidth = 4;
+    ctx3.strokeStyle = '#680002';
+    ctx3.stroke();
+    ctx3.lineWidth = 1;
+    ctx3.strokeStyle = '#bc0010';
+    ctx3.stroke();
+    ctx3.closePath();
+    ctx3.shadowBlur = 0;
+    if(i<wireStack.length-1){
+        ctx3.beginPath();
+        ctx3.moveTo(jx(wireStack[i].j), jx(wireStack[i].i));
+        i++;
+        for(;i<wireStack.length-1;i++){
+            ctx3.lineTo(jx(wireStack[i].j), jx(wireStack[i].i));
+        }
+        
+        ctx3.lineWidth = 4;
+        ctx3.strokeStyle = '#330000';
+        ctx3.stroke();
+        ctx3.lineWidth = 1;
+        ctx3.strokeStyle = '#4d0000';
+        ctx3.stroke();
+        ctx3.closePath();
+    }
+    for(let i in cannons){
+        if(cannons[i].active)
+            ctx3.drawImage(redSquare,m.round(cannons[i].x-redSquare.width/2), m.round(cannons[i].y-redSquare.width/2));
+    }
+
+}
+
+function findBug(){
+    let f = Vfield(player);
+    let max = new tile(0,0);
+    for(let i in f)
+        for(let j in f[i])
+            if(f[i][j].dist > max.dist){
+                max = f[i][j];
+                max.i = i; max.j = j;
+            }
+    return max;
+}
+function bugField(bot){
+    if(!wireStack.length){
+        bot.field = Vfield(player);
+        return player;
+    }
+    else{
+        bot.field = Vfield(bot);
+        let min =  new tile(Infinity,0);
+        for(let wire of wireStack){
+            if(bot.field[wire.i][wire.j].dist < min.dist){
+                min.dir = bot.field[wire.i][wire.j].dir;
+                min.dist = bot.field[wire.i][wire.j].dist;
+                min.i = wire.i; min.j = wire.j;
+            }
+        }
+        let i=min.i, j=min.j;
+        let curDir = min.dir;
+        bot.field[i][j].dir = 0;
+        while(curDir!==0){
+            switch(curDir){
+                case 1: 
+                    j--;
+                    curDir = bot.field[i][j].dir;
+                    bot.field[i][j].dir=3;
+                    break;
+                case 2: 
+                    i--;
+                    curDir = bot.field[i][j].dir;
+                    bot.field[i][j].dir=4;
+                    break;
+                case 3: 
+                    j++;
+                    curDir = bot.field[i][j].dir;
+                    bot.field[i][j].dir=1;
+                    break;
+                case 4: 
+                    i++;
+                    curDir = bot.field[i][j].dir;
+                    bot.field[i][j].dir=2;
+                    break;
+            }
+        }
+        return min;
+    }
+}
+function glitch(img){
+    let gltch = document.createElement('canvas');
+    gltch.width = img.width; gltch.height = img.height;
+    glctx = gltch.getContext('2d');
+    let offset = gltch.width/20;
+    let randY = ()=>{
+        return m.random()*img.height;
+    }
+    let randH = (y)=>{
+        return m.random()*(img.height-y);
+    }
+    let rndoff = ()=>{
+        return m.random()*offset-offset/2;
+    }
+    for(let i=0;i<2;i++){
+        let y = randY(),rh = randH(y),off=rndoff();
+        glctx.drawImage(img,0,y,img.width,rh,off,y,img.width,rh);
+    }
+    return gltch;
+}
+function gameInit(p1,p2,p3){
+    width = p2;
+    intrnlns = p1;
+    N = p3;
+    ctx.clearRect(0,0,w,h);
+    ctx2.clearRect(0,0,w,h);
+    ctx3.clearRect(0,0,w,h);
+    ctx4.clearRect(0,0,w,h);
+    PAUSE = false;
+
+    tab = ~~((w-itab)/width);
+    height = ~~((h-itab)/tab);
+
+    eps = tab/18;
+    halfTab = tab/2; 
+    rootTab = m.sqrt(tab);
+    ws = tab/128; // wall scale
+    vision = tab*2.5; // sight radius
+    sqVision = vision*vision;
+    cannonR = tab*2;
+    cannonsChanged = true;
+    segments = []; // for shadow casting
+    wireStack = [];
+    visibles = [];
+    jam = null;
+    fix = false;
+    dieStep = 30;
+
+    go = {
+        Dn : tab,
+        Rt : tab,
+        Lt : tab,
+        Up : tab,
+    };
+
+    cannons = [], bots = [];
+    for(let i=0; i<N; i++)
+        cannons.push(new cannon());
+    botStep = 2;
+    
+    //============================================== prerendering
+    radar = document.createElement('canvas');
+    radar.width = radar.height = cannonR;
+    r_ctx = radar.getContext('2d');
+    r_ctx.beginPath();
+    grdVec = new dot(m.cos(quarterPi), m.sin(quarterPi));
+    grdVec = grdVec.rotate(halfPi);
+    grd2=r_ctx.createLinearGradient(0-grdVec.x*cannonR,0-grdVec.y*cannonR,0+grdVec.x*cannonR,0+grdVec.y*cannonR);
+    grd2.addColorStop(0,"red");
+    grd2.addColorStop(1,"transparent");
+    r_ctx.fillStyle=grd2;
+    r_ctx.moveTo(0,0);
+    r_ctx.lineTo(cannonR, 0);
+    r_ctx.lineWidth = 4;
+    r_ctx.strokeStyle = 'red';
+    r_ctx.stroke();
+    r_ctx.arc(0,0,cannonR,0,halfPi);
+    r_ctx.fill();
+    r_ctx.closePath();
+
+    redSquare = document.createElement('canvas');
+    redSquare.width = redSquare.height = round(tab/5);
+    sq_ctx = redSquare.getContext('2d');
+    sq_ctx.beginPath();
+    /*sq_ctx.shadowColor = '#bc0010';
+    sq_ctx.shadowBlur = round(tab/8);*/
+    sq_ctx.fillStyle = '#680002';
+    sq_ctx.fillRect(round(redSquare.width/2-tab/10),round(redSquare.width/2-tab/10),round(tab/5),round(tab/5));
+    sq_ctx.fillStyle = '#bc0010';
+    sq_ctx.shadowBlur = 0;
+    sq_ctx.fillRect(redSquare.width/2-tab/14,redSquare.width/2-tab/14,tab/7,tab/7);
+    sq_ctx.closePath();
+
+    blackSquare = document.createElement('canvas');
+    blackSquare.style.background = 'rgba(0,0,0,0)';
+    blackSquare.width = blackSquare.height = round(tab/3);
+    bsq_ctx = blackSquare.getContext('2d');
+    bsq_ctx.beginPath();
+    bsq_ctx.shadowColor = shadowCol;
+    bsq_ctx.shadowBlur = round(tab/5);
+    bsq_ctx.fillStyle = shadowCol;
+    bsq_ctx.fillRect(round(blackSquare.width/2-tab/10),round(blackSquare.width/2-tab/10),round(tab/5),round(tab/5));
+    bsq_ctx.shadowBlur = 0;
+    bsq_ctx.closePath();
+    //=================================================
+    player = {
+        i: 0,
+        j: 0,
+        x: itab+halfTab,
+        y: itab+halfTab,
+        step: 3,
+        stop: false,
+        shoots: false,
+        HIT: null,
+        updateStep(diff){
+            this.step = round((diff/5)*(rootTab/10));
+        },
+        hit(){
+            this.HIT = null;
+            let minDist = Infinity;
+            for(let i in bots){
+                let botDist = sqdist(bots[i],this);
+                if(bots[i].i===this.i && bots[i].j===this.j){
+                    this.HIT = i;
+                    return;
+                }
+                let target = m.atan2(bots[i].y-this.y,bots[i].x-this.x);
+                if(inRange(target,dir.angle,pi/16)){
+                    let intersects = [];
+                    let ray = new dot(cursor.trueX-this.x, cursor.trueY-this.y);
+                    for (let seg of segments){
+                        let dot = newSegRay(seg,ray,this);
+                        if(dot) intersects.push({dot:dot,seg:seg});
+                    }
+                    if(intersects.length){
+                        intersects.sort((a,b)=>sqdist(a.dot,this)-sqdist(b.dot,this));
+                        if(sqdist(intersects[0].dot,this) > botDist && botDist < minDist){
+                            this.HIT = i; 
+                            minDist = botDist;
+                        }
+                    }
+                    else if(botDist < minDist){
+                        this.HIT = i;
+                        minDist = botDist;
+                    }
+                }
+            }
+        }
+    };
+    maze = []; // for storing rows
+    row = [];  // for storing cells
+    sets = new Array(width); //each set has 1 initial cell
+    cursor={
+      x: player.x,
+      y: player.y,
+    };
+    dir = {
+        update() {
+            for (let i in this){
+                if(typeof(this[i])!='function')
+                    this[i] = null;
+            }
+            this.y = cursor.y - player.y;
+            this.x = cursor.x - player.x;
+            this.angle = m.atan2(this.y,this.x);
+            
+            if(this.angle < quarterPi && this.angle > -quarterPi)
+                this.right = true;
+            else if(this.angle < 3*quarterPi && this.angle > quarterPi)
+                this.down = true;
+            else if(this.angle < -quarterPi && this.angle > -3*quarterPi)
+                this.up = true;
+            else if(this.angle < -3*quarterPi || this.angle > 3*quarterPi)
+                this.left = true;
+        }
+    };
+    //----------------------------------------------------------------------------------------------------------------------maze generation
+    for(let j=0; j<width; j++){
+        row.push(new cell(0,0,j)); //initialize cells to different sets
+        let set = [j]; // init sets with initial cells
+        sets[j] = JSON.parse(JSON.stringify(set)); // because js... 
+
+    }
+    for(let i=0; i<height; i++){
+
+        for(let j=0; j<width; j++){ // need to edit previous row to use it as a new one
+            row[j].r=0;
+            if(row[j].l){
+                let index = sets[row[j].s].indexOf(j);
+                sets[row[j].s].splice(index,1); // delete cell from set
+                row[j].s = -1; // delete cells that have lower walls
+            }
+            row[j].l=0;
+        }
+
+        for(let j=0; j<width; j++)
+            if(row[j].s == -1){     // assign unique # to cells 
+                row[j].s = 0;       // that belong to no sets                       
+                
+                for(let k=0; k<width; k++)
+                    if(k!=j && row[k].s===row[j].s){ 
+                        row[j].s++;
+                        k=-1;
+                    }
+                sets[row[j].s].push(j);
+            }                               
+        
+        /* create right walls */
+        for(let j=0; j<width-1; j++){ 
+            if(m.round(m.random())) row[j].r = 1; // random wall
+            else if(row[j+1].s!=row[j].s) merge(row[j+1].s,row[j].s,row);
+        }
+        row[width-1].r = 1;
+        /* create lower walls */
+        let exits = new Array(width).fill(0);
+        for(let j=0; j<width; j++) exits[row[j].s]++; // yet each sell has no lower wall
+        for(let j=0; j<width; j++){ 
+            if(m.round(m.random())){ // if decided to create wall
+                if(exits[row[j].s]>1){ // have to check for exit from set
+                    row[j].l = 1;
+                    exits[row[j].s]--;
+                }
+            }
+        }
+        if(i===height-1){
+            for(let j=0; j<width; j++){ // last row
+                row[j].l = 1; // lower walls to all
+                if(j+1<width && row[j].s != row[j+1].s){ // unite cells from different sets
+                    row[j].r = 0;
+                    merge(row[j+1].s,row[j].s,row);
+                }
+            }
+            row[width-1].r = 1;
+        }
+        maze.push(JSON.parse(JSON.stringify(row))); // because js
+    }
+    KEY={
+        key38:false, // up
+        key40:false, // down
+        key39:false, // right
+        key37:false, // left
+        
+        key87:false, // w
+        key83:false, // s
+        key68:false, // d
+        key65:false, // a
+    };
+    //---------------------------------------------------------------------------------------draw maze
+    lw_w = 64*ws;
+    pad1 = 0; pad2 = 0; pad3 = 0; pad4 = 0;
+    pad5 = 0; pad6 = 0; pad7 = 0; pad8 = 0;
+    let x,y;
+    for(let n=0;n<2;n++)
+        for(let i=0;i<height;i++){
+            for(let j=0;j<width;j++){
+                if(i===0&&n===0){
+                    x = itab+j*tab;
+                    y = itab-lw_w/2;
+                }
+                if(j===0&&n===1){
+                    x = itab-lw_w/2;
+                    y = itab+i*tab-lw_w/2;
+                }
+                if(maze[i][j].r===1&&n===1){
+                    x = itab+(j+1)*tab-lw_w/2;
+                    y = itab+i*tab-lw_w/2;
+                    if(j<width-1){
+                        pad3 = pad4 = pad5 = pad6 = pad7 = pad8 = 0;
+                        if(i===0||maze[i-1][j].r===1){
+                            pad3 = lw_w;
+                        }
+                        if(i===height-1){
+                            pad4 = lw_w;
+                        }
+                        if(!pad3&&i>0&&maze[i-1][j].l){
+                            pad5 = lw_w;
+                        }
+                        if(i+1<height&&maze[i][j].l){
+                            pad6 = lw_w;
+                        }
+                        if(!pad3&&i>0&&maze[i-1][j+1].l){
+                            pad7 = lw_w;
+                        }
+                        if(i+1<height&&maze[i][j+1].l){
+                            pad8 = lw_w;
+                        } 
+                        segments.push(new segment(new dot(x,y+pad3+pad5), new dot(x,y+lw_w*3-pad4-pad6)));
+                        segments.push(new segment(new dot(x+lw_w,y+pad3+pad7), new dot(x+lw_w,y+lw_w*3-pad4-pad8)));
+                        if(i>0&&!maze[i-1][j].r){
+                            segments.push(new segment(new dot(x,y), new dot(x+lw_w,y)));
+                        }
+                        if(i+1<height&&!maze[i+1][j].r){
+                            segments.push(new segment(new dot(x,y+lw_w*3), new dot(x+lw_w,y+lw_w*3)));
+                        }
+                    }
+                }
+                if(maze[i][j].l===1&&n===0){
+                    x = itab+j*tab;
+                    y = itab+(i+1)*tab-lw_w/2;
+                    if(i<height-1){
+                        pad1 = pad2 = 0;
+                        if(maze[i][j].r===1||i+1<height&&maze[i+1][j].r===1){
+                            pad1 = lw_w/2;
+                        } 
+                        if(j===0||(maze[i][j-1].r===1||i+1<height&&maze[i+1][j-1].r===1)){
+                            pad2 = lw_w/2;
+                        } 
+                        segments.push(new segment(new dot(x+pad2,y), new dot(x-pad1+lw_w*2,y)));
+                        segments.push(new segment(new dot(x+pad2,y+lw_w), new dot(x-pad1+lw_w*2,y+lw_w)));
+                        if(!pad1&&j+1<width&&!maze[i][j+1].l)
+                            segments.push(new segment(new dot(x+lw_w*2,y), new dot(x+lw_w*2,y+lw_w)));
+                        if(!pad2&&j>0&&!maze[i][j-1].l)
+                            segments.push(new segment(new dot(x,y), new dot(x,y+lw_w)));
+                    }
+                }
+            }
+        }
+
+    for(let i=0; i<segments.length; i++){
+        if(segments[i]){
+            for(let j=0; j<segments.length; j++){
+                if(segments[j] && segments[j].prolongs(segments[i])){
+                    segments[i].concat(segments[j]);
+                    segments[j] = null;
+                    j = -1;
+                }
+            }
+        }
+    }
+    segments = segments.filter(I => I);
+
+    function drawMaze(){
+        //floor fill
+        ctx2.beginPath();
+        /*ctx.fillStyle = '#125425';
+        ctx.fillRect(itab,itab,width*tab,height*tab);*/
+        floorPat = ctx.createPattern(floor, 'repeat');
+        ctx2.fillStyle = floorPat;
+        ctx2.fillRect(itab,itab,width*tab,height*tab);
+        ctx2.closePath();
+        
+        ctx2.shadowColor = '#fff';
+        ctx2.shadowBlur = tab/2;
+        ctx2.strokeStyle = '#1dfc81';
+        ctx2.fillStyle = '#1dfc81';
+        ctx2.lineWidth = tab/20;
+        segments.map(I => {
+            ctx2.beginPath();
+            ctx2.moveTo(I.a.x,I.a.y);
+            ctx2.lineTo(I.b.x,I.b.y);
+            ctx2.stroke();
+            ctx2.closePath();
+        });
+
+        segments.map(I => {
+            ctx2.beginPath();
+            ctx2.fillRect(I.a.x-tab/40,I.a.y-tab/40,tab/20,tab/20);
+            ctx2.fillRect(I.b.x-tab/40,I.b.y-tab/40,tab/20,tab/20);
+            ctx2.closePath();
+        });
+        ctx2.shadowBlur = 0;
+        // draw some text on top
+        ctx3.shadowColor = 'white';
+        ctx3.shadowBlur = 20;
+        ctx3.beginPath();
+        ctx3.font = '20px Courier monospace';
+        ctx3.fillStyle = '#1dfc81';
+        ctx3.fillText('wire_left: ',300,20);
+        ctx3.fillText('defenders_left: ',500,20);
+        ctx3.fillText('internalness: '+intrnlns,810,20);
+        ctx3.closePath();
+        ctx3.shadowBlur = 0;
+    };
+    if(floor.complete) drawMaze();
+    else floor.onload = drawMaze;
+
+    bug = findBug();
+    spawnBots(N);
+    wireLength = bug.dist;
+    blinkRad = 0; blinkStep = 2;
+    
+    wireChanged=true;
+    ctx.fillStyle = shadowCol;
+    ctx.fillRect(0,0,w,h);
+
+    msgPos = drawMsg('> reached internals.<br>> internal error detected.<br>> viewing range limited due to power loss. <br>> provide fix supply.<br>> WASD to move.<br>> mouse to look around.<br>> ');
+    countWire();
+
+}
+
+//----------------------------------------------------------------------------------------------------------------------------------game loop
+function draw(dT){
+if(!PAUSE){
+        if(!lastdT){ 
+            lastdT = dT;
+            trans = dT;
+        }
+        else {
+        	let diff = dT-lastdT;
+            player.updateStep(diff);
+            botsNewStep(diff);
+            cannonsNewStep(diff);
+            lastdT = dT;
+        }
+
+        // window.scrollTo(0, player.y-winHalfH);
+        // ctx.fillStyle = shadowCol;
+        ctx.fillRect(player.x-vision,player.y-vision,vision*2,vision*2);
+        ctx4.clearRect(0,0,w,h);
+
+    //--------------------------------------------------------------------------------------------------------move player & bots
+        
+        if(KEY.key87){
+            if(dir.right && maze[player.i][player.j].r!=1 && go.Rt>=tab && go.Dn>=tab && go.Up>=tab && (!player.stop || player.stop == 3)) go.Rt-=tab;
+            if(dir.up && player.i>0 && maze[player.i-1][player.j].l!=1 && go.Up>=tab && go.Rt>=tab && go.Lt>=tab && (!player.stop || player.stop == 2)) go.Up-=tab;
+            if(dir.down && maze[player.i][player.j].l!=1 && go.Dn>=tab && go.Rt>=tab && go.Lt>=tab && (!player.stop || player.stop == 4)) go.Dn-=tab;
+            if(dir.left && player.j>0 && maze[player.i][player.j-1].r!=1 && go.Lt>=tab && go.Dn>=tab && go.Up>=tab && (!player.stop || player.stop == 1)) go.Lt-=tab;
+
+            if(sqdist(player,msgPos)<sqVision)drawMsg('');
+        }
+        if(go.Rt < tab){
+            player.x+=player.step;
+            go.Rt+=player.step;
+            if(go.Rt >= tab) player.j++;
+        }
+        else if(go.Lt < tab){
+            player.x-=player.step;
+            go.Lt+=player.step;
+            if(go.Lt >= tab) player.j--;
+        }
+        else if(go.Up < tab){
+            player.y-=player.step;
+            go.Up+=player.step;
+            if(go.Up >= tab) player.i--;
+        }
+        else if(go.Dn < tab){
+            player.y+=player.step;
+            go.Dn+=player.step;
+            if(go.Dn >= tab) player.i++;
+        }
+        for (let i in bots){
+            if(!bugMsg && sqdist(player,bots[i])<tab*tab-5){
+                msgPos = drawMsg('> LMB to exterminate minor bug. <br>> bugs block cable.<br>> cause signal glitches. <br>> SPACE to install defender.<br>>');
+                bugMsg = true;
+            }
+            if(wireChanged || !bots[i].field){
+                bugField(bots[i]);
+            }
+            if(bots[i].field[bots[i].i][bots[i].j].dir===1 ){bots[i].dir=1;} 
+            else if(bots[i].field[bots[i].i][bots[i].j].dir===2){bots[i].dir=2;} 
+            else if(bots[i].field[bots[i].i][bots[i].j].dir===3){bots[i].dir=3;} 
+            else if(bots[i].field[bots[i].i][bots[i].j].dir===4){bots[i].dir=4;} 
+            else if(bots[i].field[bots[i].i][bots[i].j].dir===0){
+                bots[i].dir=0;
+                if(!bots[i].jam){
+                    trans = dT;
+                    drawWire();
+                    bots[i].jam=true;
+                }
+            }
+            if(!bots[i].dying){                    
+                if(bots[i].dir===1){
+                   bots[i].x-=botStep;
+                    if(halfTab+itab+(bots[i].j)*tab - bots[i].x>=tab){ bots[i].j--; }
+                }
+                else if(bots[i].dir===2){
+                    bots[i].y-=botStep;
+                    if(halfTab+itab+(bots[i].i)*tab - bots[i].y>=tab){ bots[i].i--; }
+                }
+                else if(bots[i].dir===3){
+                    bots[i].x+=botStep;
+                    if(bots[i].x - itab-bots[i].j*tab-halfTab>=tab){bots[i].j++; }
+                }
+                else if(bots[i].dir===4){
+                    bots[i].y+=botStep;
+                    if(bots[i].y - itab-bots[i].i*tab-halfTab>=tab) { bots[i].i++; }
+                }
+            }
+        }
+        
+        //--------------------------------------------------------------------draw player
+
+        // cast shadows underneath player
+        ctx.globalCompositeOperation = 'destination-out';
+        ctx.beginPath();
+        ctx.moveTo(player.x,player.y);
+        ctx.arc(player.x,player.y,vision,dir.angle-quarterPi,dir.angle+quarterPi);
+        ctx.fill();
+        ctx.closePath();
+        ctx.globalCompositeOperation = 'source-over';
+
+        getVisibles(segments.filter(I=>distToSeg(player,I)<vision),player);
+        for (let i of visibles){
+                shadow(i.a,i.b);
+        }
+
+        /*eye1 = new dot(player.x+m.cos(dir.angle-quarterPi)*tab/9,player.y+m.sin(dir.angle-quarterPi)*tab/9);
+        eye2 = new dot(player.x+m.cos(dir.angle+quarterPi)*tab/9,player.y+m.sin(dir.angle+quarterPi)*tab/9);
+        ctx.fillStyle = "rgba(0,0,0,0.8)";
+        for (let i of visibles){
+                shadow(i.a,i.b,eye1);
+        }
+        for (let i of visibles){
+                shadow(i.a,i.b,eye2);
+        }*/
+        
+        dir.update();
+
+        // red square character
+        ctx.drawImage(redSquare,round(player.x-redSquare.width/2), round(player.y-redSquare.width/2));
+
+        //-------------------------------------------------------------------------------build wire
+        wireChanged=false;
+        if(wireStack.length === 0)
+            wireStack.push({j:0, i:0});
+        else if(player.j!=wireStack[wireStack.length-1].j || player.i!=wireStack[wireStack.length-1].i){
+            if(wireStack.length>1 && player.j===wireStack[wireStack.length-2].j && player.i===wireStack[wireStack.length-2].i){
+                wireStack.pop();
+                wireChanged = true;
+                countWire();
+                drawWire();
+            }
+            else{
+                wireStack.push({j:player.j, i:player.i});
+                wireChanged = true;
+                countWire();
+                drawWire();
+            }
+        }
+        
+        if(!wireChanged && cannonsChanged){
+            drawWire();
+            countCannons();
+        }
+
+        ctx.beginPath();
+        if(wireStack.length > 1){
+            ctx.moveTo(jx(wireStack[wireStack.length-2].j), jx(wireStack[wireStack.length-2].i));
+            let vec = new dot(player.x-jx(wireStack[wireStack.length-2].j),player.y-jx(wireStack[wireStack.length-2].i));
+            vec.x*=0.9; 
+            vec.y*=0.9;
+            ctx.lineTo(jx(wireStack[wireStack.length-2].j)+vec.x, jx(wireStack[wireStack.length-2].i)+vec.y);
+        }
+        else{
+            ctx.moveTo(jx(0),40);
+            ctx.lineTo(player.x,player.y-redSquare.width/2);
+        }
+        if(jam===null){
+            ctx.lineWidth = 4;
+            ctx.strokeStyle = '#680002';
+            ctx.stroke();
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = '#bc0010';
+            ctx.stroke();
+            ctx.closePath();
+        }
+        else{
+            ctx.lineWidth = 4;
+            ctx.strokeStyle = '#330000';
+            ctx.stroke();
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = '#4d0000';
+            ctx.stroke();
+            ctx.closePath();
+        }
+
+        // bug blink
+        ctx4.beginPath();
+        ctx4.arc(jx(bug.j),jx(bug.i),blinkRad,0,pi*2);
+        blinkRad += blinkStep;
+        if(blinkRad > tab/2 || blinkRad < 2)
+            blinkStep = -blinkStep;
+        let grd=ctx4.createRadialGradient(jx(bug.j),jx(bug.i),tab/16,jx(bug.j),jx(bug.i),tab/3);
+        grd.addColorStop(0,"#bc0010");
+        grd.addColorStop(1,"transparent");
+        ctx4.fillStyle = grd;
+        ctx4.fill();
+        ctx4.fillRect(jx(bug.j)-tab/16,jx(bug.i)-tab/16,tab/8,tab/8);
+        ctx4.closePath();
+
+        
+
+        //draw cannons (radars)
+        
+        for(let i in cannons){
+            if(cannons[i].active){
+                ctx4.save();
+                ctx4.translate(round(cannons[i].x),round(cannons[i].y));
+                ctx4.rotate(cannons[i].arc);
+                ctx4.drawImage(radar,0,0);
+                cannons[i].arc-=cannonStep; cannons[i].arc%=pi*2;
+                ctx4.restore();
+            }
+        }
+        //----------------------------------------------------------------------------draw bots
+        for(let i in bots){
+            let cannonHIT = null;
+            let cannonJ = null;
+            for(let j in cannons){
+                if(cannons[j].active){
+                    if(cannons[j].HIT===i){
+                        cannonHIT=i;
+                        cannonJ = j;
+                        break;
+                    }
+                    if(!cannons[j].HIT && sqdist(cannons[j],{x:jx(bots[i].j),y:jx(bots[i].i)}) <= cannonR*cannonR+1){
+                        cannons[j].hit(i);
+                        if(cannons[j].HIT===i){
+                            cannonHIT = i;
+                            cannonJ = j;
+                            break;
+                        }
+                    }
+                }
+            }
+            if(!bots[i].dying && player.HIT!=i && cannonHIT!=i){
+                ctx4.drawImage(blackSquare,round(bots[i].x-blackSquare.width/2),round(bots[i].y-blackSquare.width/2));
+            }
+            else if(!bots[i].dying){
+                bots[i].dying=dieStep;
+            }
+            else{
+                ctx4.beginPath();
+                ctx4.fillStyle = shadowCol;
+                let n = bots[i].dying*(tab/5)/dieStep;
+                ctx4.fillRect(bots[i].x-n/2,bots[i].y-n/2,n,n);
+                ctx4.closePath();
+
+                bots[i].dying--;
+                if(bots[i].dying===1){
+                    bots[i].dying=false;
+                    if(player.HIT===i)player.HIT=null;
+                    if(cannonJ&&cannons[cannonJ].HIT===i)
+                        cannons[cannonJ].HIT=null;
+                    bots[i].respawn();
+                    drawWire();
+                }
+            }
+        }
+
+
+        //draw electric shots
+        if(player.shoots){
+            let x,y;
+            if(player.HIT){
+                x = bots[player.HIT].x;
+                y = bots[player.HIT].y;
+            }
+            else{
+                x = cursor.trueX;
+                y = cursor.trueY;
+            }
+            drawElectro(player,{x:x,y:y});
+        }
+        for(let j in cannons){
+            let i = cannons[j].HIT;
+            if(i && cannons[j].active){
+                drawElectro(cannons[j],bots[i]);
+            }
+        }
+        //fix animation && level toggle
+        if(fix){
+            let tip = new dot( jx(wireStack[tipWire].j), jx(wireStack[tipWire].i));
+            let vec1 = new dot(tip.x-fixTip.x,tip.y-fixTip.y);
+            let l = m.sqrt(sqmod(vec1));
+            fixTip.x+=(vec1.x/l)*(tab/8);
+            fixTip.y+=(vec1.y/l)*(tab/8);
+            ctx4.beginPath();
+            ctx4.lineWidth = 2;
+            ctx4.strokeStyle = '#1dfc81';
+            ctx4.moveTo(jx(0),40+redSquare.width/2);
+            for(let i=0; i<tipWire;i++){
+                ctx4.lineTo(jx(wireStack[i].j), jx(wireStack[i].i));
+            }
+            ctx4.lineTo(fixTip.x,fixTip.y);
+            ctx4.stroke();
+            ctx4.closePath();
+            if(sqdist(fixTip,tip)<(tab*tab/16)){
+                if(tipWire===jam){
+                    msgPos=drawMsg('> smth blocks fix supply.<br>>')
+                    fix=false;
+                }
+                else if(tipWire==wireStack.length-1){
+                    fix = false;
+                    gameInit(2,13,3);
+                }
+                else{
+	                fixTip.x = tip.x; fixTip.y = tip.y;
+	                tipWire++;
+	            }
+            }
+        }
+}
+if(dT-trans < 2000){
+    ctx.drawImage(glitch(canvas),0,0);
+}
+requestAnimationFrame(draw);
+}
+
+floor.onload = function(){
+floorPat = ctx.createPattern(floor, 'repeat');
+let internals = document.createElement('canvas');
+internals.width = w*4; internals.height = 600;
+ictx = internals.getContext('2d');
+ictx.beginPath();
+ictx.beginPath();
+ictx.fillStyle = '#000';
+ictx.fillRect(0,0,internals.widht,internals.height);
+ictx.font = '500px Courier monospace';
+ictx.strokeStyle = '#1dfc81';
+ictx.lineWidth = 4;
+ictx.fillStyle = floorPat;
+ictx.fillText('Internal error', 0,500);
+ictx.strokeText('Internal error', 0,500);
+ictx.closePath();
+
+let lst,fst,t=2.5;
+let on = false, dive = false;
+let rndIntrvl = m.random()*1500;
+let rndIntrvl2 = m.random()*500+500;
+let glgo = false;
+
+function intro(dt){
+    ctx.clearRect(0,0,w,h);
+    if(!lst){
+        lst = dt;
+        fst = dt
+    }
+    
+    else if(!dive){
+        if(dt-lst > 500){
+            on = !on;
+            lst = dt;
+        }
+        if(dt-fst > 3000){
+            fst = dt;
+            dive = true;
+            glgo = true;
+            on = false;
+        }
+    }
+    
+    if(on){
+        ctx.beginPath();
+        ctx.shadowColor = 'white';
+        ctx.shadowBlur = 40;
+        ctx.beginPath();
+        ctx.font = '15px Courier monospace';
+        ctx.fillStyle = '#1dfc81';
+        ctx.fillText('> Internal error', 10,30);
+        ctx.closePath();
+    }
+    else if(dive){
+        ctx.shadowBlur = 0;
+        if(dt-fst > 2000){
+            t-=0.005;
+            if(t < 0.5){
+                gameInit(1,10,2);
+                //-------------------------------------------------------------------------------------------------------controls block
+                document.addEventListener("mousemove",function(e){
+                    let b = canvas.getBoundingClientRect();
+                    cursor.trueX = e.pageX-b.left;
+                    cursor.trueY = e.pageY-b.top;
+                    let v = new dot(e.pageX-b.left-player.x, e.pageY-b.top-player.y);
+                    let l = sqmod(v);
+                    if(l < sqVision/4){
+                        l = m.sqrt(l);
+                        cursor.x = player.x + v.x*(0.5*vision/l); 
+                        cursor.y = player.y + v.y*(0.5*vision/l);
+                    }
+                    else {
+                        cursor.x = e.pageX-b.left;
+                        cursor.y = e.pageY-b.top;
+                    }
+                });
+                document.addEventListener("keydown",function(e){
+                    KEY["key"+e.keyCode]=true;
+                    if(e.keyCode===118)
+                        PAUSE=!PAUSE;
+                    if(e.keyCode===32){
+                        e.preventDefault();
+                        if(!defMsg){
+                            msgPos = drawMsg('> defender exterminates bugs in its viewing range. <br>> bugs spawn randomly but keep distance from cable. <br>> install near crossroads or long dark dead-ends. <br>> try covering bigger cable areas. <br>> SPACE to pick up. <br>>');
+                            defMsg = true;
+                        }
+                        let trig = false;
+                        cannonsChanged = true;
+                        for(let i in cannons){
+                            if(cannons[i].active && cannons[i].i===player.i && cannons[i].j===player.j){
+                                cannons[i].deactivate();
+                                trig = true;
+                                break;
+                            }
+                        }
+                        if(!trig)
+                            for(let i in cannons){
+                                if(cannons[i].activate(player.i,player.j)) break;
+                            }
+                    }
+                    
+                });
+                document.addEventListener("mousedown",function(e){
+                    e.preventDefault();
+                    player.shoots=true; 
+                    player.hit();
+                });
+                document.addEventListener("mouseup",function(e){
+                    player.shoots=false;
+                });
+                document.addEventListener("keyup",function(e){KEY["key"+e.keyCode]=false;});
+                draw();
+                return;
+            }
+        }
+        if(!glgo && dt-lst > rndIntrvl){
+            glgo = true;
+            rndIntrvl = m.random()*2000;
+            lst = dt;
+        }
+        if(glgo){
+            ctx.drawImage(glitch(internals), 0,h/2-(1/t)*300,(w*4)/t,600/t);
+            if(dt-lst>rndIntrvl2){
+                glgo = false;
+                lst = dt;
+                rndIntrvl2 = m.random()*250
+            }
+        }
+        else{
+            ctx.drawImage(internals, 0,h/2-(1/t)*300,(w*4)/t,600/t);
+        }
+    }
+    requestAnimationFrame(intro);
+}
+intro();
+}
+/*gameInit(1,10,2);
+//-------------------------------------------------------------------------------------------------------controls block
+document.addEventListener("mousemove",function(e){
+    let b = canvas.getBoundingClientRect();
+    cursor.trueX = e.pageX-b.left;
+    cursor.trueY = e.pageY-b.top;
+    let v = new dot(e.pageX-b.left-player.x, e.pageY-b.top-player.y);
+    let l = sqmod(v);
+    if(l < sqVision/4){
+        l = m.sqrt(l);
+        cursor.x = player.x + v.x*(0.5*vision/l); 
+        cursor.y = player.y + v.y*(0.5*vision/l);
+    }
+    else {
+        cursor.x = e.pageX-b.left;
+        cursor.y = e.pageY-b.top;
+    }
+});
+document.addEventListener("keydown",function(e){
+    KEY["key"+e.keyCode]=true;
+    if(e.keyCode===118)
+        PAUSE=!PAUSE;
+    if(e.keyCode===32){
+        e.preventDefault();
+        if(!defMsg){
+            msgPos = drawMsg('> defender exterminates bugs in its viewing range. <br>> bugs spawn randomly but keep distance from cable. <br>> install near crossroads or long dark dead-ends. <br>> try covering bigger cable areas. <br>> SPACE to pick up. <br>>');
+            defMsg = true;
+        }
+        let trig = false;
+        cannonsChanged = true;
+        for(let i in cannons){
+            if(cannons[i].active && cannons[i].i===player.i && cannons[i].j===player.j){
+                cannons[i].deactivate();
+                trig = true;
+                break;
+            }
+        }
+        if(!trig)
+            for(let i in cannons){
+                if(cannons[i].activate(player.i,player.j)) break;
+            }
+    }
+    
+});
+document.addEventListener("mousedown",function(e){
+    e.preventDefault();
+    player.shoots=true; 
+    player.hit();
+});
+document.addEventListener("mouseup",function(e){
+    player.shoots=false;
+});
+document.addEventListener("keyup",function(e){KEY["key"+e.keyCode]=false;});
+draw();*/
