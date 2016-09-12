@@ -22,8 +22,8 @@ const winHalfH = window.innerHeight/2;
 const h = canvas.height = canvas2.height = canvas3.height= canvas4.height = window.innerHeight;
 const itab = 100; // initial tab
 
-let corns,msgPos,trans,PAUSE,eps,tab,halfTab,rootTab,N,intrnls,ws,vision,sqVision,cannonR,cannonsChanged,segments,wireStack,visibles,cannonStep,jam,fix,go,width,height,eye1,eye2,temp,cannons,botStep,radar,r_ctx,grdVec,grd2,redSquare,sq_ctx,blackSquare,bsq_ctx,player,maze,row,sets,cursor,dir,KEY,lw_w,pad1,pad2,pad3,pad4,pad5,pad6,pad7,pad8,bug,wireLength,blinkRad,blinkStep,lastdT,wireChanged,dieStep;
-let bugMsg = defMsg = false;
+let corns,msgPos,trans,PAUSE,eps,tab,halfTab,rootTab,N,intrnlns,ws,vision,sqVision,cannonR,cannonsChanged,segments,wireStack,visibles,cannonStep,jam,fix,go,width,height,eye1,eye2,temp,cannons,botStep,radar,r_ctx,grdVec,grd2,redSquare,sq_ctx,blackSquare,bsq_ctx,player,maze,row,sets,cursor,dir,KEY,lw_w,pad1,pad2,pad3,pad4,pad5,pad6,pad7,pad8,bug,wireLength,blinkRad,blinkStep,lastdT,wireChanged,dieStep;
+let bugMsg = defMsg = initMsg = false;
 function cannon(){
     this.active = false;
     this.activate = function(i,j){
@@ -376,7 +376,7 @@ function drawMsg(msg){
     cntnr.style.left = far.x + 'px';
     cntnr.style.top = far.y + 'px';
     cntnr.style.color = '#1dfc81';
-    cntnr.style.font = '20px Courier monospace';
+    cntnr.style.font = '20px monospace';
     cntnr.style.textShadow = '1px 1px 20px #fff'
 
 
@@ -479,7 +479,7 @@ function countWire(){
     ctx3.shadowBlur = 14;
     ctx3.beginPath();
     ctx3.clearRect(420,0,70,50);
-    ctx3.font = 'bold 20px Courier monospace';
+    ctx3.font = 'bold 20px monospace';
     ctx3.fillStyle = '#bc0010';
     ctx3.fillText(len+'',440,20);
     ctx3.closePath();
@@ -964,7 +964,7 @@ function gameInit(p1,p2,p3){
         ctx3.shadowColor = 'white';
         ctx3.shadowBlur = 20;
         ctx3.beginPath();
-        ctx3.font = '20px Courier monospace';
+        ctx3.font = '20px monospace';
         ctx3.fillStyle = '#1dfc81';
         ctx3.fillText('wire_left: ',300,20);
         ctx3.fillText('defenders_left: ',500,20);
@@ -984,7 +984,13 @@ function gameInit(p1,p2,p3){
     ctx.fillStyle = shadowCol;
     ctx.fillRect(0,0,w,h);
 
-    msgPos = drawMsg('> reached internals.<br>> internal error detected.<br>> viewing range limited due to power loss. <br>> provide fix supply.<br>> WASD to move.<br>> mouse to look around.<br>> ');
+    if(!initMsg){
+        msgPos = drawMsg('> reached internals.<br>> internal error detected.<br>> viewing range limited due to power loss. <br>> provide fix supply.<br>> W to move.<br>> mouse to look around.<br>> ');
+        initMsg = true;
+    }
+    else{
+        mgsPos = drawMsg('> looks more internal. <br>> defenders++ <br>> bugs++? <br>>');
+    }
     countWire();
 
 }
@@ -1283,7 +1289,13 @@ if(!PAUSE){
                 }
                 else if(tipWire==wireStack.length-1){
                     fix = false;
-                    gameInit(2,13,3);
+                    if(N==3){
+                        PAUSE = true;
+                        drawMsg('> good job. <br>> internal error fixed.<br>> ')
+                        setTimeout(function(){location.reload();},3000);
+                    }
+                    else
+                        gameInit(intrnlns+1,width+3,N+1);
                 }
                 else{
 	                fixTip.x = tip.x; fixTip.y = tip.y;
@@ -1292,7 +1304,7 @@ if(!PAUSE){
             }
         }
 }
-if(dT-trans < 2000){
+if(dT-trans < 500){
     ctx.drawImage(glitch(canvas),0,0);
 }
 requestAnimationFrame(draw);
@@ -1307,7 +1319,7 @@ ictx.beginPath();
 ictx.beginPath();
 ictx.fillStyle = '#000';
 ictx.fillRect(0,0,internals.widht,internals.height);
-ictx.font = '500px Courier monospace';
+ictx.font = '500px monospace';
 ictx.strokeStyle = '#1dfc81';
 ictx.lineWidth = 4;
 ictx.fillStyle = floorPat;
@@ -1315,7 +1327,7 @@ ictx.fillText('Internal error', 0,500);
 ictx.strokeText('Internal error', 0,500);
 ictx.closePath();
 
-let lst,fst,t=2.5;
+let lst,fst,t=3;
 let on = false, dive = false;
 let rndIntrvl = m.random()*1500;
 let rndIntrvl2 = m.random()*500+500;
@@ -1346,7 +1358,7 @@ function intro(dt){
         ctx.shadowColor = 'white';
         ctx.shadowBlur = 40;
         ctx.beginPath();
-        ctx.font = '15px Courier monospace';
+        ctx.font = '15px monospace';
         ctx.fillStyle = '#1dfc81';
         ctx.fillText('> Internal error', 10,30);
         ctx.closePath();
@@ -1376,8 +1388,8 @@ function intro(dt){
                 });
                 document.addEventListener("keydown",function(e){
                     KEY["key"+e.keyCode]=true;
-                    if(e.keyCode===118)
-                        PAUSE=!PAUSE;
+                    /*if(e.keyCode===118)
+                        PAUSE=!PAUSE;*/
                     if(e.keyCode===32){
                         e.preventDefault();
                         if(!defMsg){
@@ -1434,57 +1446,3 @@ function intro(dt){
 }
 intro();
 }
-/*gameInit(1,10,2);
-//-------------------------------------------------------------------------------------------------------controls block
-document.addEventListener("mousemove",function(e){
-    let b = canvas.getBoundingClientRect();
-    cursor.trueX = e.pageX-b.left;
-    cursor.trueY = e.pageY-b.top;
-    let v = new dot(e.pageX-b.left-player.x, e.pageY-b.top-player.y);
-    let l = sqmod(v);
-    if(l < sqVision/4){
-        l = m.sqrt(l);
-        cursor.x = player.x + v.x*(0.5*vision/l); 
-        cursor.y = player.y + v.y*(0.5*vision/l);
-    }
-    else {
-        cursor.x = e.pageX-b.left;
-        cursor.y = e.pageY-b.top;
-    }
-});
-document.addEventListener("keydown",function(e){
-    KEY["key"+e.keyCode]=true;
-    if(e.keyCode===118)
-        PAUSE=!PAUSE;
-    if(e.keyCode===32){
-        e.preventDefault();
-        if(!defMsg){
-            msgPos = drawMsg('> defender exterminates bugs in its viewing range. <br>> bugs spawn randomly but keep distance from cable. <br>> install near crossroads or long dark dead-ends. <br>> try covering bigger cable areas. <br>> SPACE to pick up. <br>>');
-            defMsg = true;
-        }
-        let trig = false;
-        cannonsChanged = true;
-        for(let i in cannons){
-            if(cannons[i].active && cannons[i].i===player.i && cannons[i].j===player.j){
-                cannons[i].deactivate();
-                trig = true;
-                break;
-            }
-        }
-        if(!trig)
-            for(let i in cannons){
-                if(cannons[i].activate(player.i,player.j)) break;
-            }
-    }
-    
-});
-document.addEventListener("mousedown",function(e){
-    e.preventDefault();
-    player.shoots=true; 
-    player.hit();
-});
-document.addEventListener("mouseup",function(e){
-    player.shoots=false;
-});
-document.addEventListener("keyup",function(e){KEY["key"+e.keyCode]=false;});
-draw();*/
